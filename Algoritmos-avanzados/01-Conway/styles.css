@@ -1,0 +1,415 @@
+/* Reset y base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #000;
+    color: #fff;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #fff;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Main content layout */
+.main-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.canvas-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+#glCanvas {
+    border: 2px solid #fff;
+    cursor: crosshair;
+    display: block;
+    background-color: #000;
+}
+
+.end-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 3px solid #fff;
+    padding: 30px 40px;
+    text-align: center;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    max-width: 80%;
+}
+
+.end-message.hidden {
+    display: none;
+}
+
+/* Controls */
+.controls {
+    flex: 1;
+    min-width: 300px;
+}
+
+.stats {
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #fff;
+}
+
+.stat-item {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.stat-item:last-child {
+    margin-bottom: 0;
+}
+
+.stat-label {
+    font-weight: bold;
+    display: inline-block;
+    min-width: 140px;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* Buttons */
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.speed-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 15px 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: #fff;
+    color: #000;
+}
+
+.btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background-color: #fff;
+    color: #000;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #000;
+    color: #fff;
+}
+
+.btn-small {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+/* Keyboard hints */
+.keyboard-hints {
+    background-color: #000;
+    border: 2px solid #fff;
+    padding: 20px;
+}
+
+.keyboard-hints h3 {
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.keyboard-hints ul {
+    list-style: none;
+}
+
+.keyboard-hints li {
+    margin-bottom: 10px;
+    padding-left: 0;
+}
+
+kbd {
+    background-color: #fff;
+    color: #000;
+    padding: 3px 8px;
+    border: 1px solid #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Patterns */
+.patterns {
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    padding: 40px 0;
+    margin-bottom: 40px;
+}
+
+.patterns h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.pattern-category {
+    margin-bottom: 30px;
+}
+
+.pattern-category h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.pattern-category p {
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+.pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.pattern-btn {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pattern-btn:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.pattern-btn:hover .pattern-preview {
+    border-color: #000;
+}
+
+.pattern-preview {
+    flex-shrink: 0;
+    border: 1px solid #fff;
+    background-color: #000;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.pattern-name {
+    flex: 1;
+}
+
+.pattern-btn .period {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    display: block;
+    margin-top: 3px;
+}
+
+/* How to use */
+.how-to-use {
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    padding: 40px 0;
+    margin-bottom: 40px;
+}
+
+.how-to-use h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.usage-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #fff;
+}
+
+.usage-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.usage-section p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.usage-section ul,
+.usage-section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.usage-section li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.usage-section kbd {
+    background-color: #fff;
+    color: #000;
+    padding: 2px 6px;
+    border: 1px solid #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* Documentation */
+.documentation {
+    border-top: 2px solid #fff;
+    padding-top: 40px;
+    margin-bottom: 40px;
+}
+
+.documentation h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.doc-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #fff;
+}
+
+.doc-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.doc-section p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.doc-section ul,
+.doc-section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.doc-section li {
+    margin-bottom: 8px;
+}
+
+.doc-section strong {
+    color: #fff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 2px solid #fff;
+    opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    #glCanvas {
+        width: 100%;
+        height: auto;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .pattern-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pattern-btn {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pattern-preview {
+        align-self: center;
+        margin-bottom: 8px;
+    }
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de la Vida de Conway - WebGL</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JUEGO DE LA VIDA DE CONWAY</h1>
+            <p>Simulación celular</p>
+        </header>
+
+        <div class="main-content">
+            <div class="canvas-container">
+                <canvas id="glCanvas" width="512" height="512"></canvas>
+                <div id="endMessage" class="end-message hidden"></div>
+            </div>
+
+            <div class="controls">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">GENERACIÓN:</span>
+                        <span id="generation" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">CÉLULAS VIVAS:</span>
+                        <span id="aliveCells" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">VELOCIDAD:</span>
+                        <span id="speed" class="stat-value">10</span>
+                        <span class="stat-label">FPS</span>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button id="startBtn" class="btn btn-primary">INICIAR</button>
+                    <button id="pauseBtn" class="btn" disabled>PAUSAR</button>
+                    <button id="randomBtn" class="btn">ALEATORIO</button>
+                    <button id="clearBtn" class="btn">LIMPIAR</button>
+                </div>
+
+                <div class="speed-controls">
+                    <button id="slowBtn" class="btn btn-small">LENTO (-)</button>
+                    <button id="fastBtn" class="btn btn-small">RÁPIDO (+)</button>
+                </div>
+
+                <div class="keyboard-hints">
+                    <h3>ATAJOS DE TECLADO</h3>
+                    <ul>
+                        <li><kbd>ESPACIO</kbd> - Pausar/Reanudar</li>
+                        <li><kbd>R</kbd> - Patrón aleatorio</li>
+                        <li><kbd>C</kbd> - Limpiar cuadrícula</li>
+                        <li><kbd>↑</kbd> / <kbd>↓</kbd> - Ajustar velocidad</li>
+                        <li><kbd>CLICK</kbd> - Dibujar células</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section class="patterns">
+            <h2>EJEMPLOS DE PATRONES</h2>
+
+            <div class="pattern-category">
+                <h3>Vidas estáticas</h3>
+                <p>Patrones que no cambian a lo largo de las generaciones</p>
+                <div class="pattern-grid">
+                    <button class="pattern-btn" data-pattern="block">
+                        <canvas class="pattern-preview" data-pattern-name="block" width="60" height="60"></canvas>
+                        <span class="pattern-name">Bloque</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="beehive">
+                        <canvas class="pattern-preview" data-pattern-name="beehive" width="60" height="60"></canvas>
+                        <span class="pattern-name">Colmena de abejas</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="loaf">
+                        <canvas class="pattern-preview" data-pattern-name="loaf" width="60" height="60"></canvas>
+                        <span class="pattern-name">Pan</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="boat">
+                        <canvas class="pattern-preview" data-pattern-name="boat" width="60" height="60"></canvas>
+                        <span class="pattern-name">Bote</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="tub">
+                        <canvas class="pattern-preview" data-pattern-name="tub" width="60" height="60"></canvas>
+                        <span class="pattern-name">Bañera</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pattern-category">
+                <h3>Osciladores</h3>
+                <p>Patrones que se repiten cíclicamente</p>
+                <div class="pattern-grid">
+                    <button class="pattern-btn" data-pattern="blinker">
+                        <canvas class="pattern-preview" data-pattern-name="blinker" width="60" height="60"></canvas>
+                        <span class="pattern-name">Intermitente <span class="period">(período 2)</span></span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="toad">
+                        <canvas class="pattern-preview" data-pattern-name="toad" width="60" height="60"></canvas>
+                        <span class="pattern-name">Sapo <span class="period">(período 2)</span></span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="beacon">
+                        <canvas class="pattern-preview" data-pattern-name="beacon" width="60" height="60"></canvas>
+                        <span class="pattern-name">Faro <span class="period">(período 2)</span></span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="pulsar">
+                        <canvas class="pattern-preview" data-pattern-name="pulsar" width="60" height="60"></canvas>
+                        <span class="pattern-name">Púlsar <span class="period">(período 3)</span></span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="pentadecathlon">
+                        <canvas class="pattern-preview" data-pattern-name="pentadecathlon" width="60" height="60"></canvas>
+                        <span class="pattern-name">Pentadecatlón <span class="period">(período 15)</span></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pattern-category">
+                <h3>Naves espaciales</h3>
+                <p>Patrones que se desplazan por la cuadrícula</p>
+                <div class="pattern-grid">
+                    <button class="pattern-btn" data-pattern="glider">
+                        <canvas class="pattern-preview" data-pattern-name="glider" width="60" height="60"></canvas>
+                        <span class="pattern-name">Planeador</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="lwss">
+                        <canvas class="pattern-preview" data-pattern-name="lwss" width="60" height="60"></canvas>
+                        <span class="pattern-name">Nave espacial ligera</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="mwss">
+                        <canvas class="pattern-preview" data-pattern-name="mwss" width="60" height="60"></canvas>
+                        <span class="pattern-name">Nave espacial de peso medio</span>
+                    </button>
+                    <button class="pattern-btn" data-pattern="hwss">
+                        <canvas class="pattern-preview" data-pattern-name="hwss" width="60" height="60"></canvas>
+                        <span class="pattern-name">Nave espacial pesada</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-to-use">
+            <h2>CÓMO USAR</h2>
+
+            <div class="usage-section">
+                <h3>Inicio rápido</h3>
+                <ol>
+                    <li><strong>Selecciona un patrón:</strong> Haz click en cualquiera de los patrones predefinidos arriba (por ejemplo, "Planeador" o "Intermitente")</li>
+                    <li><strong>Inicia la simulación:</strong> Presiona el botón "INICIAR" o la tecla <kbd>ESPACIO</kbd></li>
+                    <li><strong>Observa la evolución:</strong> Las células evolucionarán según las reglas de Conway</li>
+                </ol>
+            </div>
+
+            <div class="usage-section">
+                <h3>Dibujar manualmente</h3>
+                <p>
+                    Puedes crear tus propios patrones dibujando directamente en la cuadrícula:
+                </p>
+                <ol>
+                    <li>Haz click en el botón "LIMPIAR" o presiona <kbd>C</kbd> para empezar con una cuadrícula vacía</li>
+                    <li>Haz click y arrastra sobre el canvas para dibujar células vivas (píxeles blancos)</li>
+                    <li>Una vez que hayas terminado tu diseño, presiona "INICIAR" para ver cómo evoluciona</li>
+                </ol>
+            </div>
+
+            <div class="usage-section">
+                <h3>Controles de velocidad</h3>
+                <p>
+                    Puedes ajustar la velocidad de la simulación de varias formas:
+                </p>
+                <ul>
+                    <li>Usa los botones "LENTO (-)" y "RÁPIDO (+)" para ajustar la velocidad</li>
+                    <li>Usa las teclas <kbd>↑</kbd> y <kbd>↓</kbd> para incrementar o decrementar la velocidad</li>
+                    <li>La velocidad se muestra en generaciones por segundo (FPS)</li>
+                    <li>Rango: de 1 FPS (muy lento) a 60 FPS (muy rápido)</li>
+                </ul>
+            </div>
+
+            <div class="usage-section">
+                <h3>Interpretando las estadísticas</h3>
+                <ul>
+                    <li><strong>Generación:</strong> Número de iteraciones completadas desde el inicio</li>
+                    <li><strong>Células vivas:</strong> Cantidad de células activas en la cuadrícula actual</li>
+                    <li><strong>Velocidad:</strong> Cuántas generaciones se calculan por segundo</li>
+                </ul>
+            </div>
+
+            <div class="usage-section">
+                <h3>Finalización automática</h3>
+                <p>
+                    El simulador detecta automáticamente cuando la simulación ha alcanzado un estado final:
+                </p>
+                <ul>
+                    <li><strong>Extinción:</strong> Todas las células han muerto (la cuadrícula queda negra)</li>
+                    <li><strong>Estado estable:</strong> El patrón no cambia entre generaciones (vida estática)</li>
+                    <li><strong>Bucle periódico:</strong> El patrón se repite cada N generaciones (oscilador)</li>
+                </ul>
+                <p>
+                    Cuando esto ocurre, verás un mensaje indicando el tipo de finalización.
+                    Para continuar, carga un nuevo patrón o dibuja uno nuevo.
+                </p>
+            </div>
+
+            <div class="usage-section">
+                <h3>Consejos</h3>
+                <ul>
+                    <li>Experimenta con patrones aleatorios usando el botón "ALEATORIO" o la tecla <kbd>R</kbd></li>
+                    <li>Los patrones más interesantes suelen tener entre 20% y 40% de células vivas inicialmente</li>
+                    <li>Algunos patrones pueden tardar cientos de generaciones en estabilizarse</li>
+                    <li>Las naves espaciales (como el Planeador) se desplazan indefinidamente en una cuadrícula toroidal</li>
+                    <li>Usa la tecla <kbd>ESPACIO</kbd> para pausar y observar el estado actual en detalle</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="documentation">
+            <h2>DOCUMENTACIÓN</h2>
+
+            <div class="doc-section">
+                <h3>El Juego de la Vida de Conway</h3>
+                <p>
+                    El Juego de la Vida es un autómata celular diseñado por el matemático británico
+                    John Horton Conway en 1970. Es un juego de cero jugadores, lo que significa que
+                    su evolución está determinada por su estado inicial, sin necesidad de entrada adicional.
+                </p>
+                <p><strong>Reglas:</strong></p>
+                <ul>
+                    <li>Una célula viva con 2 o 3 vecinos vivos sobrevive</li>
+                    <li>Una célula viva con menos de 2 vecinos muere (subpoblación)</li>
+                    <li>Una célula viva con más de 3 vecinos muere (sobrepoblación)</li>
+                    <li>Una célula muerta con exactamente 3 vecinos vivos revive (reproducción)</li>
+                </ul>
+            </div>
+
+            <div class="doc-section">
+                <h3>Algoritmo usado</h3>
+                <p>
+                    El estado de cada célula en la generación t+1 se determina mediante una función
+                    que depende de su estado actual y el número de vecinos vivos en la generación t.
+                </p>
+                <p><strong>Notación:</strong></p>
+                <ul>
+                    <li>Sea C(i,j,t) el estado de la célula en posición (i,j) en el tiempo t</li>
+                    <li>C(i,j,t) = 1 si la célula está viva, 0 si está muerta</li>
+                    <li>N(i,j,t) = número de vecinos vivos de la célula (i,j) en el tiempo t</li>
+                </ul>
+                <p><strong>Cálculo de vecinos:</strong></p>
+                <p>
+                    N(i,j,t) = Σ C(i+di, j+dj, t) para (di,dj) ∈ {-1,0,1}² \ {(0,0)}
+                </p>
+                <p>
+                    Es decir, se suman los estados de las 8 células adyacentes:
+                    (i-1,j-1), (i-1,j), (i-1,j+1), (i,j-1), (i,j+1), (i+1,j-1), (i+1,j), (i+1,j+1)
+                </p>
+                <p><strong>Función de transición:</strong></p>
+                <p>
+                    C(i,j,t+1) = {<br>
+                    &nbsp;&nbsp;1 si (C(i,j,t) = 1 y N(i,j,t) ∈ {2,3}) o (C(i,j,t) = 0 y N(i,j,t) = 3)<br>
+                    &nbsp;&nbsp;0 en otro caso
+                </p>
+                <p>
+                    Esta función puede expresarse de forma más compacta como:<br>
+                    C(i,j,t+1) = (N(i,j,t) = 3) ∨ (C(i,j,t) ∧ N(i,j,t) = 2)
+                </p>
+            </div>
+
+            <div class="doc-section">
+                <h3>Implementación en GPU con WebGL</h3>
+                <p>
+                    Esta implementación utiliza WebGL para ejecutar las reglas del Juego de la Vida
+                    directamente en la GPU, lo que permite simular millones de células en tiempo real.
+                </p>
+                <p><strong>Fragment Shader:</strong></p>
+                <ul>
+                    <li>Para cada célula (pixel), lee el estado de sus 8 vecinos</li>
+                    <li>Cuenta cuántos vecinos están vivos</li>
+                    <li>Aplica las reglas de Conway para determinar el nuevo estado</li>
+                    <li>Escribe el resultado en una textura</li>
+                </ul>
+                <p>
+                    Los bordes de la cuadrícula son toroidales, es decir, están conectados:
+                    el borde superior se conecta con el inferior y el izquierdo con el derecho.
+                </p>
+            </div>
+
+            <div class="doc-section">
+                <h3>Técnica Ping-Pong</h3>
+                <p>
+                    Para actualizar el estado del juego, se utiliza la técnica de ping-pong con dos texturas:
+                </p>
+                <ul>
+                    <li><strong>Textura A (lectura):</strong> Contiene el estado actual de todas las células</li>
+                    <li><strong>Textura B (escritura):</strong> Recibe el nuevo estado calculado por el shader</li>
+                </ul>
+                <p>
+                    En cada generación, el fragment shader lee de la textura A, aplica las reglas,
+                    y escribe el resultado en la textura B (renderizando a un framebuffer). Luego,
+                    las texturas intercambian roles: B se convierte en lectura y A en escritura.
+                </p>
+                <p>
+                    Este proceso permite calcular el nuevo estado sin sobrescribir el estado actual
+                    hasta que todos los cálculos están completos, evitando condiciones de carrera.
+                </p>
+                <p><strong>Algoritmo del ciclo ping-pong:</strong></p>
+                <ol>
+                    <li><strong>Lectura:</strong> El shader lee el estado de todas las células desde la textura actual (T<sub>current</sub>)</li>
+                    <li><strong>Cómputo:</strong> Para cada célula, se calcula el nuevo estado aplicando las reglas de Conway</li>
+                    <li><strong>Escritura:</strong> Los nuevos estados se escriben en la textura alternativa (T<sub>next</sub>) mediante un framebuffer</li>
+                    <li><strong>Intercambio:</strong> Se intercambian los roles: T<sub>current</sub> ← T<sub>next</sub>, T<sub>next</sub> ← T<sub>current</sub></li>
+                    <li><strong>Repetición:</strong> El proceso se repite para la siguiente generación</li>
+                </ol>
+                <p>
+                    Matemáticamente, en la generación t tenemos dos texturas T<sub>0</sub> y T<sub>1</sub>.
+                    Si t es par, leemos de T<sub>0</sub> y escribimos en T<sub>1</sub>.
+                    Si t es impar, leemos de T<sub>1</sub> y escribimos en T<sub>0</sub>.
+                    Esto garantiza que siempre tengamos disponible el estado completo de la generación anterior
+                    mientras calculamos la siguiente.
+                </p>
+            </div>
+
+            <div class="doc-section">
+                <h3>Detección de finalización</h3>
+                <p>
+                    El simulador detecta automáticamente tres tipos de finalización:
+                </p>
+                <ul>
+                    <li><strong>Extinción:</strong> Todas las células han muerto</li>
+                    <li><strong>Estado estable:</strong> El patrón no cambia entre generaciones</li>
+                    <li><strong>Bucle periódico:</strong> El patrón se repite cada N generaciones (se detectan periodos de 2 a 10)</li>
+                </ul>
+                <p>
+                    Para detectar bucles, se mantiene un historial de los últimos estados (hashes)
+                    y se comparan con el estado actual.
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Juego de la Vida de Conway - 2025</p>
+        </footer>
+    </div>
+
+    <script src="shaders.js"></script>
+    <script src="game.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
