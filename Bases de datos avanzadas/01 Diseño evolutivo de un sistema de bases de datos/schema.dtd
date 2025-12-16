@@ -1,0 +1,194 @@
+<!--
+  DTD (Document Type Definition) para el sistema de gestión de flotas
+  Sistema de transporte urbano
+  Versión: 1.0
+  Fecha: 2024-11-27
+-->
+
+<!-- Elemento raíz -->
+<!ELEMENT flota (metadatos, autobuses, conductores, rutas, trayectos, estadisticas_generales)>
+
+<!-- ============================================================================
+     SECCIÓN: Metadatos
+     ============================================================================ -->
+
+<!ELEMENT metadatos (ciudad, fecha_exportacion, version_esquema, descripcion)>
+
+<!ELEMENT ciudad (#PCDATA)>
+<!ATTLIST ciudad
+    codigo CDATA #REQUIRED
+>
+
+<!ELEMENT fecha_exportacion (#PCDATA)>
+<!ELEMENT version_esquema (#PCDATA)>
+<!ELEMENT descripcion (#PCDATA)>
+
+<!-- ============================================================================
+     SECCIÓN: Autobuses
+     ============================================================================ -->
+
+<!ELEMENT autobuses (autobus+)>
+
+<!ELEMENT autobus (capacidad, consumo_medio, flota, estado, ultimo_mantenimiento?)>
+<!ATTLIST autobus
+    id ID #REQUIRED
+    matricula CDATA #REQUIRED
+>
+
+<!ELEMENT capacidad (#PCDATA)>
+<!ELEMENT consumo_medio (#PCDATA)>
+
+<!ELEMENT flota EMPTY>
+<!ATTLIST flota
+    codigo CDATA #REQUIRED
+    marca CDATA #REQUIRED
+    anio CDATA #REQUIRED
+>
+
+<!ELEMENT estado (#PCDATA)>
+
+<!ELEMENT ultimo_mantenimiento (fecha, tipo, tecnico, duracion_minutos)>
+<!ELEMENT fecha (#PCDATA)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT tecnico (#PCDATA)>
+<!ELEMENT duracion_minutos (#PCDATA)>
+
+<!-- ============================================================================
+     SECCIÓN: Conductores
+     ============================================================================ -->
+
+<!ELEMENT conductores (conductor+)>
+
+<!ELEMENT conductor (nombre_completo, permisos, antiguedad, autobuses_autorizados, turno)>
+<!ATTLIST conductor
+    id ID #REQUIRED
+>
+
+<!ELEMENT nombre_completo (#PCDATA)>
+<!ELEMENT permisos (#PCDATA)>
+<!ELEMENT antiguedad (#PCDATA)>
+
+<!ELEMENT autobuses_autorizados (autobus_ref+)>
+
+<!ELEMENT autobus_ref EMPTY>
+<!ATTLIST autobus_ref
+    id IDREF #REQUIRED
+>
+
+<!ELEMENT turno EMPTY>
+<!ATTLIST turno
+    codigo CDATA #REQUIRED
+    horario CDATA #REQUIRED
+    dias CDATA #REQUIRED
+>
+
+<!-- ============================================================================
+     SECCIÓN: Rutas
+     ============================================================================ -->
+
+<!ELEMENT rutas (ruta+)>
+
+<!ELEMENT ruta (nombre, num_paradas, longitud_km, paradas)>
+<!ATTLIST ruta
+    id ID #REQUIRED
+    codigo CDATA #REQUIRED
+>
+
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT num_paradas (#PCDATA)>
+<!ELEMENT longitud_km (#PCDATA)>
+
+<!ELEMENT paradas (parada+)>
+
+<!ELEMENT parada (codigo, nombre, direccion, coordenadas)>
+<!ATTLIST parada
+    id ID #REQUIRED
+    orden CDATA #REQUIRED
+>
+
+<!ELEMENT codigo (#PCDATA)>
+
+<!ELEMENT direccion (calle, ciudad)>
+<!ELEMENT calle (#PCDATA)>
+
+<!ELEMENT coordenadas (latitud, longitud)>
+<!ELEMENT latitud (#PCDATA)>
+<!ELEMENT longitud (#PCDATA)>
+
+<!-- ============================================================================
+     SECCIÓN: Trayectos
+     ============================================================================ -->
+
+<!ELEMENT trayectos (trayecto+)>
+<!ATTLIST trayectos
+    fecha CDATA #REQUIRED
+>
+
+<!ELEMENT trayecto (autobus_ref_tray, ruta_ref, fecha_hora_inicio, fecha_hora_fin, duracion_minutos, pasos_parada, incidentes?, metricas_rendimiento)>
+<!ATTLIST trayecto
+    id ID #REQUIRED
+>
+
+<!ELEMENT autobus_ref_tray EMPTY>
+<!ATTLIST autobus_ref_tray
+    id IDREF #REQUIRED
+    matricula CDATA #REQUIRED
+>
+
+<!ELEMENT ruta_ref EMPTY>
+<!ATTLIST ruta_ref
+    id IDREF #REQUIRED
+    codigo CDATA #REQUIRED
+>
+
+<!ELEMENT fecha_hora_inicio (#PCDATA)>
+<!ELEMENT fecha_hora_fin (#PCDATA)>
+<!ELEMENT duracion_minutos (#PCDATA)>
+
+<!ELEMENT pasos_parada (paso+)>
+
+<!ELEMENT paso (parada_ref, hora_estimada, hora_real, retraso_minutos, observaciones?)>
+
+<!ELEMENT parada_ref EMPTY>
+<!ATTLIST parada_ref
+    id IDREF #REQUIRED
+    codigo CDATA #REQUIRED
+>
+
+<!ELEMENT hora_estimada (#PCDATA)>
+<!ELEMENT hora_real (#PCDATA)>
+<!ELEMENT retraso_minutos (#PCDATA)>
+<!ELEMENT observaciones (#PCDATA)>
+
+<!ELEMENT incidentes (incidente+)>
+
+<!ELEMENT incidente (descripcion, gravedad, tiempo_resolucion_min)>
+<!ATTLIST incidente
+    id ID #REQUIRED
+    codigo CDATA #REQUIRED
+>
+
+<!ELEMENT descripcion (#PCDATA)>
+<!ELEMENT gravedad (#PCDATA)>
+<!ELEMENT tiempo_resolucion_min (#PCDATA)>
+
+<!ELEMENT metricas_rendimiento (tiempo_total_min, tiempo_parada_acumulado_min, velocidad_media_kmh, consumo_energetico_litros, emisiones_co2_kg)>
+<!ELEMENT tiempo_total_min (#PCDATA)>
+<!ELEMENT tiempo_parada_acumulado_min (#PCDATA)>
+<!ELEMENT velocidad_media_kmh (#PCDATA)>
+<!ELEMENT consumo_energetico_litros (#PCDATA)>
+<!ELEMENT emisiones_co2_kg (#PCDATA)>
+
+<!-- ============================================================================
+     SECCIÓN: Estadísticas generales
+     ============================================================================ -->
+
+<!ELEMENT estadisticas_generales (total_autobuses, total_conductores, total_rutas, total_trayectos, total_incidentes, consumo_total_litros, emisiones_totales_co2_kg)>
+
+<!ELEMENT total_autobuses (#PCDATA)>
+<!ELEMENT total_conductores (#PCDATA)>
+<!ELEMENT total_rutas (#PCDATA)>
+<!ELEMENT total_trayectos (#PCDATA)>
+<!ELEMENT total_incidentes (#PCDATA)>
+<!ELEMENT consumo_total_litros (#PCDATA)>
+<!ELEMENT emisiones_totales_co2_kg (#PCDATA)>

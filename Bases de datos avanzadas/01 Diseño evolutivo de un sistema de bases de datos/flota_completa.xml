@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flota SYSTEM "schema.dtd">
+
+<!--
+  Archivo XML de exportación de flota completa
+  Sistema de gestión de flotas de transporte urbano
+  Ciudad: Madrid
+  Fecha de exportación: 2024-11-27
+-->
+
+<flota>
+  <metadatos>
+    <ciudad codigo="MAD">Madrid</ciudad>
+    <fecha_exportacion>2024-11-27T10:30:00</fecha_exportacion>
+    <version_esquema>1.0</version_esquema>
+    <descripcion>Exportación completa de la flota de Madrid incluyendo autobuses, rutas, conductores, trayectos e incidentes del último mes</descripcion>
+  </metadatos>
+
+  <autobuses>
+    <autobus id="1" matricula="1234-ABC">
+      <capacidad>80</capacidad>
+      <consumo_medio>0.35</consumo_medio>
+      <flota codigo="FLOTA_A" marca="Mercedes-Benz" anio="2022"/>
+      <estado>OPERATIVO</estado>
+      <ultimo_mantenimiento>
+        <fecha>2024-11-01</fecha>
+        <tipo>PREVENTIVO</tipo>
+        <tecnico>Carlos Martínez</tecnico>
+        <duracion_minutos>120</duracion_minutos>
+      </ultimo_mantenimiento>
+    </autobus>
+
+    <autobus id="2" matricula="1235-ABC">
+      <capacidad>80</capacidad>
+      <consumo_medio>0.35</consumo_medio>
+      <flota codigo="FLOTA_A" marca="Mercedes-Benz" anio="2022"/>
+      <estado>OPERATIVO</estado>
+      <ultimo_mantenimiento>
+        <fecha>2024-11-05</fecha>
+        <tipo>PREVENTIVO</tipo>
+        <tecnico>Carlos Martínez</tecnico>
+        <duracion_minutos>120</duracion_minutos>
+      </ultimo_mantenimiento>
+    </autobus>
+
+    <autobus id="3" matricula="1236-ABC">
+      <capacidad>80</capacidad>
+      <consumo_medio>0.36</consumo_medio>
+      <flota codigo="FLOTA_A" marca="Mercedes-Benz" anio="2022"/>
+      <estado>OPERATIVO</estado>
+      <ultimo_mantenimiento>
+        <fecha>2024-11-10</fecha>
+        <tipo>PREVENTIVO</tipo>
+        <tecnico>Laura Sánchez</tecnico>
+        <duracion_minutos>135</duracion_minutos>
+      </ultimo_mantenimiento>
+    </autobus>
+
+    <autobus id="4" matricula="5678-DEF">
+      <capacidad>120</capacidad>
+      <consumo_medio>0.42</consumo_medio>
+      <flota codigo="FLOTA_B" marca="Volvo" anio="2020"/>
+      <estado>EN_MANTENIMIENTO</estado>
+      <ultimo_mantenimiento>
+        <fecha>2024-11-15</fecha>
+        <tipo>PREVENTIVO</tipo>
+        <tecnico>Laura Sánchez</tecnico>
+        <duracion_minutos>120</duracion_minutos>
+      </ultimo_mantenimiento>
+    </autobus>
+  </autobuses>
+
+  <conductores>
+    <conductor id="1">
+      <nombre_completo>María López Fernández</nombre_completo>
+      <permisos>D+E</permisos>
+      <antiguedad>8</antiguedad>
+      <autobuses_autorizados>
+        <autobus_ref id="1"/>
+        <autobus_ref id="2"/>
+      </autobuses_autorizados>
+      <turno codigo="TURNO_M" horario="06:00-14:00" dias="L,M,X,J,V"/>
+    </conductor>
+
+    <conductor id="2">
+      <nombre_completo>Juan García Martínez</nombre_completo>
+      <permisos>D</permisos>
+      <antiguedad>5</antiguedad>
+      <autobuses_autorizados>
+        <autobus_ref id="2"/>
+        <autobus_ref id="4"/>
+      </autobuses_autorizados>
+      <turno codigo="TURNO_T" horario="14:00-22:00" dias="L,M,X,J,V"/>
+    </conductor>
+
+    <conductor id="3">
+      <nombre_completo>Ana Ruiz Sánchez</nombre_completo>
+      <permisos>D+E</permisos>
+      <antiguedad>12</antiguedad>
+      <autobuses_autorizados>
+        <autobus_ref id="3"/>
+      </autobuses_autorizados>
+      <turno codigo="TURNO_M" horario="06:00-14:00" dias="L,M,X,J,V"/>
+    </conductor>
+  </conductores>
+
+  <rutas>
+    <ruta id="r1" codigo="R01">
+      <nombre>Centro - Aeropuerto</nombre>
+      <num_paradas>15</num_paradas>
+      <longitud_km>22.50</longitud_km>
+      <paradas>
+        <parada id="p1" orden="1">
+          <codigo>P001</codigo>
+          <nombre>Plaza del Ayuntamiento</nombre>
+          <direccion>
+            <calle>Plaza Mayor, 1</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.41677</latitud>
+            <longitud>-3.70379</longitud>
+          </coordenadas>
+        </parada>
+
+        <parada id="p3" orden="2">
+          <codigo>P003</codigo>
+          <nombre>Puerta del Sol</nombre>
+          <direccion>
+            <calle>Plaza de la Puerta del Sol</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.41694</latitud>
+            <longitud>-3.70346</longitud>
+          </coordenadas>
+        </parada>
+
+        <parada id="p4" orden="3">
+          <codigo>P004</codigo>
+          <nombre>Gran Vía - Callao</nombre>
+          <direccion>
+            <calle>Gran Vía, 28</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.41996</latitud>
+            <longitud>-3.70653</longitud>
+          </coordenadas>
+        </parada>
+
+        <parada id="p5" orden="4">
+          <codigo>P005</codigo>
+          <nombre>Aeropuerto T4</nombre>
+          <direccion>
+            <calle>Avenida de la Hispanidad</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.49355</latitud>
+            <longitud>-3.56675</longitud>
+          </coordenadas>
+        </parada>
+      </paradas>
+    </ruta>
+
+    <ruta id="r2" codigo="R02">
+      <nombre>Centro - Universidad</nombre>
+      <num_paradas>12</num_paradas>
+      <longitud_km>18.00</longitud_km>
+      <paradas>
+        <parada id="p1r2" orden="1">
+          <codigo>P001</codigo>
+          <nombre>Plaza del Ayuntamiento</nombre>
+          <direccion>
+            <calle>Plaza Mayor, 1</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.41677</latitud>
+            <longitud>-3.70379</longitud>
+          </coordenadas>
+        </parada>
+
+        <parada id="p6" orden="2">
+          <codigo>P006</codigo>
+          <nombre>Ciudad Universitaria</nombre>
+          <direccion>
+            <calle>Avenida Complutense</calle>
+            <ciudad>Madrid</ciudad>
+          </direccion>
+          <coordenadas>
+            <latitud>40.44958</latitud>
+            <longitud>-3.72873</longitud>
+          </coordenadas>
+        </parada>
+      </paradas>
+    </ruta>
+  </rutas>
+
+  <trayectos fecha="2024-11-25">
+    <trayecto id="t1">
+      <autobus_ref_tray id="1" matricula="1234-ABC"/>
+      <ruta_ref id="r1" codigo="R01"/>
+      <fecha_hora_inicio>2024-11-25T08:00:00</fecha_hora_inicio>
+      <fecha_hora_fin>2024-11-25T09:15:00</fecha_hora_fin>
+      <duracion_minutos>75</duracion_minutos>
+
+      <pasos_parada>
+        <paso>
+          <parada_ref id="p1" codigo="P001"/>
+          <hora_estimada>08:00:00</hora_estimada>
+          <hora_real>08:02:00</hora_real>
+          <retraso_minutos>2</retraso_minutos>
+          <observaciones>Salida con 2 minutos de retraso</observaciones>
+        </paso>
+
+        <paso>
+          <parada_ref id="p3" codigo="P003"/>
+          <hora_estimada>08:15:00</hora_estimada>
+          <hora_real>08:18:00</hora_real>
+          <retraso_minutos>3</retraso_minutos>
+          <observaciones>Tráfico denso en la zona</observaciones>
+        </paso>
+
+        <paso>
+          <parada_ref id="p4" codigo="P004"/>
+          <hora_estimada>08:30:00</hora_estimada>
+          <hora_real>08:35:00</hora_real>
+          <retraso_minutos>5</retraso_minutos>
+          <observaciones>Retraso acumulado</observaciones>
+        </paso>
+
+        <paso>
+          <parada_ref id="p5" codigo="P005"/>
+          <hora_estimada>09:00:00</hora_estimada>
+          <hora_real>09:15:00</hora_real>
+          <retraso_minutos>15</retraso_minutos>
+          <observaciones>Llegada con 15 minutos de retraso</observaciones>
+        </paso>
+      </pasos_parada>
+
+      <incidentes>
+        <incidente id="i1" codigo="INC001">
+          <descripcion>Tráfico denso en acceso a M-40 por obras</descripcion>
+          <gravedad>MEDIA</gravedad>
+          <tiempo_resolucion_min>15</tiempo_resolucion_min>
+        </incidente>
+      </incidentes>
+
+      <metricas_rendimiento>
+        <tiempo_total_min>75</tiempo_total_min>
+        <tiempo_parada_acumulado_min>8</tiempo_parada_acumulado_min>
+        <velocidad_media_kmh>18.0</velocidad_media_kmh>
+        <consumo_energetico_litros>7.87</consumo_energetico_litros>
+        <emisiones_co2_kg>20.87</emisiones_co2_kg>
+      </metricas_rendimiento>
+    </trayecto>
+
+    <trayecto id="t2">
+      <autobus_ref_tray id="1" matricula="1234-ABC"/>
+      <ruta_ref id="r1" codigo="R01"/>
+      <fecha_hora_inicio>2024-11-25T10:30:00</fecha_hora_inicio>
+      <fecha_hora_fin>2024-11-25T11:45:00</fecha_hora_fin>
+      <duracion_minutos>75</duracion_minutos>
+
+      <pasos_parada>
+        <paso>
+          <parada_ref id="p1" codigo="P001"/>
+          <hora_estimada>10:30:00</hora_estimada>
+          <hora_real>10:30:00</hora_real>
+          <retraso_minutos>0</retraso_minutos>
+        </paso>
+
+        <paso>
+          <parada_ref id="p3" codigo="P003"/>
+          <hora_estimada>10:45:00</hora_estimada>
+          <hora_real>10:46:00</hora_real>
+          <retraso_minutos>1</retraso_minutos>
+        </paso>
+
+        <paso>
+          <parada_ref id="p4" codigo="P004"/>
+          <hora_estimada>11:00:00</hora_estimada>
+          <hora_real>11:02:00</hora_real>
+          <retraso_minutos>2</retraso_minutos>
+        </paso>
+
+        <paso>
+          <parada_ref id="p5" codigo="P005"/>
+          <hora_estimada>11:30:00</hora_estimada>
+          <hora_real>11:45:00</hora_real>
+          <retraso_minutos>15</retraso_minutos>
+          <observaciones>Retención por accidente en M-40</observaciones>
+        </paso>
+      </pasos_parada>
+
+      <incidentes>
+        <incidente id="i2" codigo="INC002">
+          <descripcion>Retención por accidente en salida 12 de M-40</descripcion>
+          <gravedad>ALTA</gravedad>
+          <tiempo_resolucion_min>30</tiempo_resolucion_min>
+        </incidente>
+      </incidentes>
+
+      <metricas_rendimiento>
+        <tiempo_total_min>75</tiempo_total_min>
+        <tiempo_parada_acumulado_min>12</tiempo_parada_acumulado_min>
+        <velocidad_media_kmh>18.0</velocidad_media_kmh>
+        <consumo_energetico_litros>7.87</consumo_energetico_litros>
+        <emisiones_co2_kg>20.87</emisiones_co2_kg>
+      </metricas_rendimiento>
+    </trayecto>
+
+    <trayecto id="t3">
+      <autobus_ref_tray id="2" matricula="1235-ABC"/>
+      <ruta_ref id="r2" codigo="R02"/>
+      <fecha_hora_inicio>2024-11-25T07:45:00</fecha_hora_inicio>
+      <fecha_hora_fin>2024-11-25T08:50:00</fecha_hora_fin>
+      <duracion_minutos>65</duracion_minutos>
+
+      <pasos_parada>
+        <paso>
+          <parada_ref id="p1r2" codigo="P001"/>
+          <hora_estimada>07:45:00</hora_estimada>
+          <hora_real>07:45:00</hora_real>
+          <retraso_minutos>0</retraso_minutos>
+        </paso>
+
+        <paso>
+          <parada_ref id="p6" codigo="P006"/>
+          <hora_estimada>08:30:00</hora_estimada>
+          <hora_real>08:50:00</hora_real>
+          <retraso_minutos>20</retraso_minutos>
+          <observaciones>Retraso por obras en la Castellana</observaciones>
+        </paso>
+      </pasos_parada>
+
+      <incidentes>
+        <incidente id="i3" codigo="INC003">
+          <descripcion>Obras de asfaltado en Paseo de la Castellana</descripcion>
+          <gravedad>BAJA</gravedad>
+          <tiempo_resolucion_min>10</tiempo_resolucion_min>
+        </incidente>
+      </incidentes>
+
+      <metricas_rendimiento>
+        <tiempo_total_min>65</tiempo_total_min>
+        <tiempo_parada_acumulado_min>5</tiempo_parada_acumulado_min>
+        <velocidad_media_kmh>16.6</velocidad_media_kmh>
+        <consumo_energetico_litros>6.30</consumo_energetico_litros>
+        <emisiones_co2_kg>16.70</emisiones_co2_kg>
+      </metricas_rendimiento>
+    </trayecto>
+  </trayectos>
+
+  <estadisticas_generales>
+    <total_autobuses>4</total_autobuses>
+    <total_conductores>3</total_conductores>
+    <total_rutas>2</total_rutas>
+    <total_trayectos>3</total_trayectos>
+    <total_incidentes>3</total_incidentes>
+    <consumo_total_litros>22.04</consumo_total_litros>
+    <emisiones_totales_co2_kg>58.44</emisiones_totales_co2_kg>
+  </estadisticas_generales>
+</flota>
